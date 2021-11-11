@@ -17,10 +17,11 @@ import fileDownload from 'js-file-download'
 export default function Home()  {
 
     const dispatch = useDispatch()
-
     const contacts = useSelector((state) => state.contacts.contacts)
 
     const [data, setData] = useState([])
+    const [text, setText] = useState('')
+
     useEffect(()=>{
         var url = "https://eulerity-hackathon.appspot.com/pets"
         axios.get(url)
@@ -45,11 +46,16 @@ export default function Home()  {
             
         })
     }
+
+    const handleTextChange = (event) => {
+        setText(event.target.value)
+        
+    }
     return (
         <div>
             <UpperRow>
                 <div>
-                    <img src={companyLogo} alt="BigCo Inc. logo" style = {{height : "70px"}}/>
+                    <img src={companyLogo} alt="Eulerity logo" style = {{height : "70px"}}/>
                 </div>
                 <div style = {{display : 'flex', flexDirection : 'row'}}>
                     <Box
@@ -60,7 +66,7 @@ export default function Home()  {
                         noValidate
                         autoComplete="off"
                         >
-                        <TextField id="outlined-basic" label="Search" variant="outlined" />
+                        <TextField id="outlined-basic" label="Search" variant="outlined" onChange = {(event)=> handleTextChange(event)}/>
                     </Box>
                     <Stack direction="row" spacing={2}>
                         <Button onClick = {()=> data.map(pet => dispatch(addContact(pet.url)))}>Select All</Button>
@@ -76,7 +82,10 @@ export default function Home()  {
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column">
                                     {
-                                        data.map(pet => <PhotoCard title = {pet.title} description = {pet.description} url = {pet.url}/>)
+                                        text == "" ? data.map(pet => <PhotoCard title = {pet.title} description = {pet.description} url = {pet.url}/>)
+                                        : 
+                                        data.filter(pet => pet.title.includes(text) || pet.description.includes(text)).map(filteredPet => <PhotoCard title = {filteredPet.title} description = {filteredPet.description} url = {filteredPet.url} />)
+                                        
                                     }
                 </Masonry>
             </Photos>
