@@ -8,10 +8,15 @@ import Masonry from 'react-masonry-css'
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import companyLogo from '../utils/images/logoEulerity.png';
-
+import { useDispatch,useSelector } from 'react-redux';
 
 
 export default function Home()  {
+
+    const dispatch = useDispatch()
+
+    const contacts = useSelector((state) => state.contacts.contacts)
+
     const [data, setData] = useState([])
     useEffect(()=>{
         var url = "https://eulerity-hackathon.appspot.com/pets"
@@ -28,6 +33,7 @@ export default function Home()  {
     }
     return (
         <div>
+            {contacts.length}
             <UpperRow>
                 <div>
                     <img src={companyLogo} alt="BigCo Inc. logo" style = {{height : "70px"}}/>

@@ -4,16 +4,18 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { addContact, deleteContact } from '../store/contactSlice'
 
 export default function PhotoCard({title, description, url}) {
-    const [selected, setSelected] = useState([])
+    const dispatch = useDispatch()
+    const contacts = useSelector((state) => state.contacts.contacts)
+    
   return (
-    <Card sx={{ width: 345}}>
+    <Card sx={{ width: 345}} onClick = {()=> contacts.includes(url) ? dispatch(deleteContact(url)) : dispatch(addContact(url))}>
       <CardActionArea>
         <CardMedia
           component="img"
-        //   height="140"
           image={url}
           alt="Image failed to load"
         />
