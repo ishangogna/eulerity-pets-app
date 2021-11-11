@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import PhotoCard from '../components/card';
-import { Photos } from './home.styles';
+import { Photos, UpperRow } from './home.styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Masonry from 'react-masonry-css'
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import companyLogo from '../utils/images/logoEulerity.png';
 
 
 
@@ -25,18 +28,29 @@ export default function Home()  {
     }
     return (
         <div>
-            <div>
-                <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': { m: 1, width: '25ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                    >
-                    <TextField id="outlined-basic" label="Search" variant="outlined" />
-                </Box>
-            </div>
+            <UpperRow>
+                <div>
+                    <img src={companyLogo} alt="BigCo Inc. logo" style = {{height : "70px"}}/>
+                </div>
+                <div style = {{display : 'flex', flexDirection : 'row'}}>
+                    <Box
+                        component="form"
+                        sx={{
+                            '& > :not(style)': { m: 1, width: '25ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                        >
+                        <TextField id="outlined-basic" label="Search" variant="outlined" />
+                    </Box>
+                    <Stack direction="row" spacing={2}>
+                        <Button>Select All</Button>
+                        <Button>Unselect All</Button>
+                        <Button>Download</Button>
+                        
+                    </Stack>
+                </div>
+            </UpperRow>
             <Photos>
                 <Masonry
                     breakpointCols={breakpoints}
