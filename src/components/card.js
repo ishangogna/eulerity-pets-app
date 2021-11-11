@@ -12,7 +12,7 @@ export default function PhotoCard({title, description, url}) {
     const contacts = useSelector((state) => state.contacts.contacts)
     
   return (
-    <Card sx={{ width: 345}} onClick = {()=> contacts.includes(url) ? dispatch(deleteContact(url)) : dispatch(addContact(url))}>
+    <Card sx={contacts.includes(url)? {width: 345, border: '2px solid #14B7B5'}:{ width: 345}} onClick = {()=> contacts.includes(url) ? dispatch(deleteContact(url)) : dispatch(addContact(url))}>
       <CardActionArea>
         <CardMedia
           component="img"

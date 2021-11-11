@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import companyLogo from '../utils/images/logoEulerity.png';
 import { useDispatch,useSelector } from 'react-redux';
+import { addContact, deleteContact } from '../store/contactSlice'
+import fileDownload from 'js-file-download'
+
 
 
 export default function Home()  {
@@ -31,9 +34,19 @@ export default function Home()  {
         1100 : 2,
         700 : 1
     }
+    const handleDownload = () => {
+        contacts.map(contact => {
+            axios.get(contact, {
+                responseType: 'blob',
+              })
+              .then((res) => {
+                fileDownload(res.data, "image.png")
+              })
+            
+        })
+    }
     return (
         <div>
-            {contacts.length}
             <UpperRow>
                 <div>
                     <img src={companyLogo} alt="BigCo Inc. logo" style = {{height : "70px"}}/>
@@ -50,9 +63,9 @@ export default function Home()  {
                         <TextField id="outlined-basic" label="Search" variant="outlined" />
                     </Box>
                     <Stack direction="row" spacing={2}>
-                        <Button>Select All</Button>
-                        <Button>Unselect All</Button>
-                        <Button>Download</Button>
+                        <Button onClick = {()=> data.map(pet => dispatch(addContact(pet.url)))}>Select All</Button>
+                        <Button onClick = {()=> data.map(pet => dispatch(deleteContact(pet.url)))}>Unselect All</Button>
+                        <Button onClick = {()=> handleDownload()}>Download</Button>
                         
                     </Stack>
                 </div>
