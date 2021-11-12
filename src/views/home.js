@@ -11,11 +11,14 @@ import companyLogo from '../utils/images/logoEulerity.png';
 import { useDispatch,useSelector } from 'react-redux';
 import { addContact, deleteContact } from '../store/contactSlice'
 import fileDownload from 'js-file-download'
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function Home()  {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const contacts = useSelector((state) => state.contacts.contacts)
 
@@ -71,8 +74,8 @@ export default function Home()  {
                     <Stack direction="row" spacing={2}>
                         <Button onClick = {()=> data.map(pet => dispatch(addContact(pet.url)))}>Select All</Button>
                         <Button onClick = {()=> data.map(pet => dispatch(deleteContact(pet.url)))}>Unselect All</Button>
-                        <Button onClick = {()=> handleDownload()}>Download</Button>
-                        
+                        <Button onClick = {()=> handleDownload()}><FileDownloadIcon /></Button>
+                        <Button onClick = {() => navigate("/about")}><InfoIcon /></Button>  
                     </Stack>
                 </div>
             </UpperRow>
